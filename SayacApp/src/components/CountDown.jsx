@@ -18,7 +18,8 @@ const CountDown = () => {
     const classes = useStyles();
 
     const [date, setDate] = useState(()=> {
-        return moment().add(10, "hours");
+        const localData= localStorage.getItem("date");
+        return localData? moment(JSON.parse(localData)): moment().add(10,"hours");
     });
 
     const [hours, setHours] = useState("00");
@@ -34,6 +35,7 @@ const CountDown = () => {
 
     const countDownBegin = () => {
         interval=setInterval(() => {
+            localStorage.setItem("date", JSON.stringify(date))
             const now = moment();
             const distance = date - now; 
             
